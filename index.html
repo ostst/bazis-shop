@@ -39,18 +39,17 @@
             border-bottom: 1px solid #222;
         }
 
-        /* Контейнер для логотипа по центру */
         .header-logo-container {
             display: flex;
             align-items: center;
-            gap: 10px; /* Расстояние между картинкой и текстом */
+            gap: 10px;
+            cursor: pointer;
         }
 
-        /* Сама картинка логотипа */
         .store-logo-img {
             width: 32px;
             height: 32px;
-            border-radius: 50%; /* Круглая */
+            border-radius: 50%;
             object-fit: cover;
             border: 1px solid #333;
         }
@@ -71,70 +70,59 @@
             font-size: 24px;
             cursor: pointer;
             padding: 0 10px;
-            width: 44px; /* Фиксированная ширина для центровки */
-        }
-
-        /* Пустой блок справа для баланса центровки */
-        .header-spacer {
             width: 44px;
         }
 
-        /* --- БРЕНДЫ И ЗАГОЛОВКИ --- */
-        .brand-header {
-            margin: 30px 0 15px 0;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #333;
-            font-size: 18px;
-            font-weight: bold;
-            color: #666;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .brand-icon {
-            width: 24px; height: 24px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px;
-        }
+        .header-spacer { width: 44px; }
+        .admin-badge { display: none; background: red; color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; margin-left: 5px; }
 
-        /* --- СЕТКА МЕНЮ (ПОСТЕРЫ) --- */
+        /* --- МЕНЮ --- */
+        .brand-header { margin: 30px 0 15px 0; padding-bottom: 5px; border-bottom: 1px solid #333; font-size: 18px; font-weight: bold; color: #666; text-transform: uppercase; display: flex; align-items: center; gap: 10px; }
+        .brand-icon { width: 24px; height: 24px; object-fit: contain; background: #fff; border-radius: 4px; padding: 2px; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-
-        .poster-card {
-            position: relative; height: 180px; border-radius: 20px;
-            background-color: var(--card-dark); overflow: hidden; cursor: pointer;
-            display: flex; flex-direction: column; justify-content: space-between;
-            padding: 15px; border: 1px solid #333; transition: transform 0.2s;
-        }
+        
+        .poster-card { position: relative; height: 180px; border-radius: 20px; background-color: var(--card-dark); overflow: hidden; cursor: pointer; display: flex; flex-direction: column; justify-content: space-between; padding: 15px; border: 1px solid #333; transition: transform 0.2s; }
         .poster-card:active { transform: scale(0.98); }
         .poster-card.orange { background-color: var(--accent-color); border: none; }
         .poster-card.blue { background-color: #2c3e50; border: none; }
-
         .card-content { position: relative; z-index: 2; pointer-events: none; }
         .card-title-big { font-size: 24px; font-weight: 700; line-height: 1; margin-bottom: 5px; color: #fff; }
         .card-subtitle { font-size: 13px; font-weight: 400; opacity: 0.8; color: #fff; }
         .card-bg-img { position: absolute; bottom: -10px; right: -20px; width: 130px; height: 130px; object-fit: contain; z-index: 1; transform: rotate(-5deg); }
         .arrow-circle { position: absolute; bottom: 12px; right: 12px; width: 32px; height: 32px; background-color: #000; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 3; }
-        .poster-card.orange .arrow-circle svg { stroke: var(--accent-color); }
-        .poster-card.blue .arrow-circle svg { stroke: #fff; }
         .poster-card .arrow-circle svg { stroke: #fff; }
 
-        /* --- КАТАЛОГ --- */
+        /* --- ТОВАРЫ И СЛАЙДЕР --- */
         .product-card { background: var(--card-dark); border: 1px solid #2a2a2a; border-radius: 12px; padding: 12px; margin-bottom: 15px; }
-        .prod-img { width: 100%; height: 240px; object-fit: cover; background: #000; border-radius: 8px; margin-bottom: 10px; }
+        
+        .slider-container { position: relative; width: 100%; height: 240px; margin-bottom: 10px; border-radius: 8px; overflow: hidden; background: #000; }
+        .slider-track { display: flex; height: 100%; transition: transform 0.3s ease; }
+        .prod-img { min-width: 100%; height: 100%; object-fit: cover; }
+        .slider-dots { position: absolute; bottom: 10px; left: 0; right: 0; display: flex; justify-content: center; gap: 5px; }
+        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.2s; }
+        .dot.active { background: #fff; transform: scale(1.2); }
+
         .prod-title { font-size: 18px; font-weight: 700; margin-bottom: 5px; line-height: 1.2; }
         .prod-price { font-size: 18px; color: var(--accent-color); font-weight: bold; margin-bottom: 10px; }
         .prod-info { font-size: 12px; color: #888; margin-bottom: 12px; }
-        .add-btn { background: #fff; color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: 700; width: 100%; cursor: pointer; text-transform: uppercase; }
+        
+        .btns-row { display: flex; gap: 10px; }
+        .add-btn { flex: 1; background: #fff; color: #000; border: none; padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer; text-transform: uppercase; }
+        .edit-btn { background: #333; color: #fff; border: 1px solid #555; padding: 12px; border-radius: 10px; cursor: pointer; display: none; }
+
+        /* --- РЕДАКТИРОВАНИЕ --- */
+        .edit-form-container { padding: 10px; }
+        .img-preview-list { display: flex; gap: 10px; overflow-x: auto; padding: 10px 0; margin-bottom: 10px; }
+        .img-preview-item { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; border: 1px solid #444; flex-shrink: 0; }
+        .form-group { margin-bottom: 15px; }
+        .form-input, .form-select, .textarea-input { width: 100%; padding: 14px; background: #222; border: 1px solid #333; color: #fff; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        .textarea-input { height: 80px; resize: vertical; font-family: inherit; }
+        .save-btn { background: #4caf50; color: white; width: 100%; padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; margin-top: 20px; }
 
         /* --- КОРЗИНА --- */
         .cart-item { background: #111; border-radius: 12px; margin-bottom: 10px; padding: 15px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #333; }
-        .form-group { margin-bottom: 15px; }
-        .form-input, .form-select { width: 100%; padding: 14px; background: #222; border: 1px solid #333; color: #fff; border-radius: 10px; font-size: 16px; box-sizing: border-box; -webkit-appearance: none; }
-
-        .checkout-btn-visible { display: none; background: var(--accent-color); color: #fff; width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 18px; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 25px; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3); }
-        .checkout-btn-visible:active { opacity: 0.9; transform: scale(0.98); }
-
-        /* --- UI --- */
+        .checkout-btn-visible { display: none; background: var(--accent-color); color: #fff; width: 100%; padding: 16px; border: none; border-radius: 12px; font-size: 18px; font-weight: 800; text-transform: uppercase; cursor: pointer; margin-top: 25px; }
+        
         .page { display: none; animation: fadeIn 0.3s ease; }
         .page.active { display: block; }
         .fab-cart { position: fixed; bottom: 25px; right: 20px; background: var(--accent-color); color: white; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(255, 87, 34, 0.3); z-index: 200; font-size: 24px; }
@@ -143,33 +131,22 @@
     </style>
 </head>
 <body>
-
     <!-- ШАПКА -->
     <div class="header">
-        <!-- Кнопка назад (слева) -->
-        <button id="backBtn" class="back-btn" onclick="goHome()">
+        <button id="backBtn" class="back-btn" onclick="goBack()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </button>
-
-        <!-- ЛОГОТИП И НАЗВАНИЕ (По центру) -->
-        <div class="header-logo-container">
-            <!-- ВСТАВЬ СЮДА ССЫЛКУ НА ЛОГО -->
+        <div class="header-logo-container" onclick="toggleAdminMode()">
             <img src="img/logo_bazis.jpeg" class="store-logo-img" alt="Logo">
-
             <div class="logo-text">BAZIS</div>
+            <div id="adminBadge" class="admin-badge">ADMIN</div>
         </div>
-
-        <!-- Пустой блок (справа) для баланса -->
         <div class="header-spacer"></div>
     </div>
 
     <!-- ЭКРАН 1: МЕНЮ -->
     <div id="homePage" class="page active">
-        <!-- STONE ISLAND -->
-        <div class="brand-header">
-            <img src="img/stone island.jpg" class="brand-icon">
-            STONE ISLAND
-        </div>
+        <div class="brand-header"><img src="img/stone island.jpg" class="brand-icon">STONE ISLAND</div>
         <div class="grid">
             <div class="poster-card" onclick="openCategory('Stone Island', 'T-Shirts')">
                 <div class="card-content"><div class="card-title-big">Футболки</div><div class="card-subtitle">Футболки и поло</div></div>
@@ -197,12 +174,7 @@
                 <div class="arrow-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
             </div>
         </div>
-
-        <!-- C.P. COMPANY -->
-        <div class="brand-header" style="margin-top: 40px;">
-             <img src="img/c. p. company.jpg" class="brand-icon">
-             C.P. COMPANY
-        </div>
+        <div class="brand-header" style="margin-top: 40px;"><img src="img/c. p. company.jpg" class="brand-icon">C.P. COMPANY</div>
         <div class="grid">
              <div class="poster-card blue" style="grid-column: span 2;" onclick="openCategory('CP Company', 'Outerwear')">
                  <div class="card-content"><div class="card-title-big">Metropolis</div><div class="card-subtitle">Urban Protection Series</div></div>
@@ -218,125 +190,217 @@
         <div id="productsList"></div>
     </div>
 
-    <!-- ЭКРАН 3: КОРЗИНА -->
+    <!-- ЭКРАН 3: РЕДАКТИРОВАНИЕ -->
+    <div id="editPage" class="page">
+        <h2 style="margin-bottom: 20px;">Редактирование</h2>
+        <div class="edit-form-container">
+            <input type="hidden" id="editId">
+            <div class="form-group"><label>Фотографии (URL, каждая с новой строки)</label><textarea class="form-input textarea-input" id="editImages" placeholder="https://..."></textarea><div id="editImagesPreview" class="img-preview-list"></div></div>
+            <div class="form-group"><label>Название</label><input type="text" class="form-input" id="editTitle"></div>
+            <div class="form-group"><label>Цена (₽)</label><input type="number" class="form-input" id="editPrice"></div>
+            <div class="form-group"><label>Размер</label><input type="text" class="form-input" id="editSize"></div>
+            <div class="form-group"><label>Состояние</label><input type="text" class="form-input" id="editCondition"></div>
+            <button class="save-btn" onclick="saveProduct()">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+        </div>
+    </div>
+
+    <!-- ЭКРАН 4: КОРЗИНА -->
     <div id="cartPage" class="page">
         <h2 style="margin-bottom: 20px;">Ваш заказ</h2>
         <div id="cartItemsList"></div>
         <div style="border-top: 1px solid #333; margin: 30px 0;"></div>
-
         <h3 style="margin-bottom: 15px; color: var(--accent-color)">Данные получателя</h3>
         <div class="form-group"><input type="text" class="form-input" id="inputName" placeholder="Имя Фамилия (Обязательно)"></div>
         <div class="form-group"><input type="tel" class="form-input" id="inputPhone" placeholder="Телефон (Обязательно)"></div>
         <div class="form-group"><input type="text" class="form-input" id="inputNick" placeholder="Ник в Telegram (@username)"></div>
-        <div class="form-group">
-            <select class="form-select" id="inputDelivery">
-                <option value="cdek">СДЭК (до пункта выдачи)</option>
-                <option value="yandex">Яндекс Доставка</option>
-                <option value="pickup">Самовывоз (Москва)</option>
-            </select>
-        </div>
+        <div class="form-group"><select class="form-select" id="inputDelivery"><option value="cdek">СДЭК (до пункта выдачи)</option><option value="yandex">Яндекс Доставка</option><option value="pickup">Самовывоз (Москва)</option></select></div>
         <button class="checkout-btn-visible" onclick="submitOrder()">ОТПРАВИТЬ ЗАКАЗ</button>
     </div>
 
-    <!-- FAB -->
     <div class="fab-cart" onclick="openCart()">🛒<div class="cart-count" id="cartCount">0</div></div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand(); tg.ready();
         tg.setHeaderColor('#0f0f0f'); tg.setBackgroundColor('#0f0f0f');
-        tg.MainButton.color = "#ff5722"; tg.MainButton.textColor = "#ffffff";
-        tg.MainButton.onClick(submitOrder); 
 
-        const PRODUCTS_DB = [
-            { id: 1, brand: 'Stone Island', category: 'T-Shirts', title: 'Logo Tee', price: 18500, size: 'L', color: 'Black', condition: 'New', img: 'https://image.goxip.com/u4g1y8y_s2r4s3r8x4t2r5u2u2/stone-island-white-scraping-t-shirt.jpg' },
-            { id: 2, brand: 'Stone Island', category: 'Hoodies', title: 'Shadow Project', price: 45000, size: 'XL', color: 'Olive', condition: '9/10', img: 'https://cdn-images.farfetch-contents.com/17/60/89/24/17608924_36852642_1000.jpg' },
-            { id: 3, brand: 'Stone Island', category: 'Vintage', title: 'Raso Gommato', price: 85000, size: 'M', color: 'Camo', condition: 'Vintage', img: 'https://media.endclothing.com/media/f_auto,q_auto:eco,w_400/prodmedia/media/catalog/product/2/0/20-01-2022_SI_MEMBRANATC_LOW.jpg' },
-            { id: 4, brand: 'CP Company', category: 'Outerwear', title: 'Metropolis Jkt', price: 92000, size: '50', color: 'Grey', condition: 'New', img: 'https://cdn-images.farfetch-contents.com/19/52/47/48/19524748_43431995_1000.jpg' },
-            { id: 5, brand: 'Stone Island', category: 'Outerwear', title: 'Nylon Metal', price: 65000, size: 'L', color: 'Blue', condition: 'New', img: 'https://www.triads.co.uk/images/products/zoom/1660305680-45336800.jpg' },
-            { id: 6, brand: 'Stone Island', category: 'Accessories', title: 'Logo Cap', price: 14500, size: 'OS', color: 'Black', condition: 'New', img: 'https://img01.ztat.net/article/spp-media-p1/d4c5322c15e34d3881b78468e2447c60/857ec713f43644938177d606073f4a4f.jpg?imwidth=1800' }
-        ];
-
+        let PRODUCTS_DB = [];
         let cart = [];
+        let isAdmin = false;
+        let currentCategoryParams = { brand: null, cat: null };
+        let logoTapCount = 0;
 
-        function addToCart(id) {
-            const p = PRODUCTS_DB.find(x => x.id === id);
-            if(p) { cart.push(p); updateCartUI(); tg.HapticFeedback.notificationOccurred('success'); }
+        // --- ЗАГРУЗКА ---
+        async function fetchProducts() {
+            try {
+                const response = await fetch('/api/products');
+                PRODUCTS_DB = await response.json();
+            } catch (error) { console.error("Ошибка загрузки:", error); }
         }
+        fetchProducts();
 
-        function removeFromCart(index) {
-            cart.splice(index, 1); updateCartUI(); renderCartPage(); tg.HapticFeedback.selectionChanged();
-        }
-
-        function updateCartUI() {
-            document.getElementById('cartCount').innerText = cart.length;
-            if (cart.length > 0) {
-                const total = cart.reduce((a,b) => a + b.price, 0);
-                tg.MainButton.setText(`ЗАКАЗАТЬ • ${total.toLocaleString()} ₽`);
-                if (document.getElementById('cartPage').style.display === 'block') tg.MainButton.show();
-            } else { tg.MainButton.hide(); }
-        }
-
+        // --- НАВИГАЦИЯ ---
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-
             const backBtn = document.getElementById('backBtn');
             if (pageId === 'homePage') { backBtn.style.display = 'none'; tg.MainButton.hide(); } 
             else { backBtn.style.display = 'block'; }
-
             if (pageId === 'cartPage') updateCartUI(); 
             else tg.MainButton.hide();
             window.scrollTo(0,0);
         }
-
+        function goBack() { 
+            if(document.querySelector('.page.active').id === 'editPage') openCategory(currentCategoryParams.brand, currentCategoryParams.cat);
+            else goHome(); 
+        }
         function goHome() { showPage('homePage'); }
 
+        // --- АДМИНКА ---
+        function toggleAdminMode() {
+            logoTapCount++;
+            if (logoTapCount >= 5) { // 5 нажатий для админки
+                isAdmin = !isAdmin;
+                logoTapCount = 0;
+                document.getElementById('adminBadge').style.display = isAdmin ? 'inline-block' : 'none';
+                tg.HapticFeedback.notificationOccurred('success');
+                if(document.getElementById('productsPage').classList.contains('active')) openCategory(currentCategoryParams.brand, currentCategoryParams.cat);
+            }
+        }
+
+        // --- КАТАЛОГ ---
         function openCategory(brand, category) {
+            currentCategoryParams = { brand, cat: category };
             const list = document.getElementById('productsList');
             document.getElementById('categoryTitle').innerHTML = `<span style="color:#888">${brand}</span> ${category}`;
             list.innerHTML = '';
             const items = PRODUCTS_DB.filter(p => p.brand === brand && p.category === category);
+            
             if (items.length === 0) list.innerHTML = '<div style="text-align:center; padding:40px; color:#555">Пусто 🌪</div>';
+            
             items.forEach(item => {
                 const el = document.createElement('div');
                 el.className = 'product-card';
+                let slidesHtml = '', dotsHtml = '';
+                if(item.images && item.images.length > 0) {
+                    item.images.forEach((src, idx) => {
+                        slidesHtml += `<img src="${src}" class="prod-img">`;
+                        dotsHtml += `<div class="dot ${idx===0?'active':''}"></div>`;
+                    });
+                } else { slidesHtml = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:#555">NO PHOTO</div>'; }
+
+                const editButtonHtml = isAdmin ? `<button class="edit-btn" style="display:block" onclick="openEditPage(${item.id})">✏️</button>` : '';
+
                 el.innerHTML = `
-                    <img src="${item.img}" class="prod-img">
+                    <div class="slider-container" onclick="nextSlide(this)">
+                        <div class="slider-track" style="width: ${Math.max(1, item.images.length) * 100}%;">${slidesHtml}</div>
+                        <div class="slider-dots">${dotsHtml}</div>
+                    </div>
                     <div class="prod-title">${item.title}</div>
                     <div class="prod-price">${item.price.toLocaleString()} ₽</div>
                     <div class="prod-info">Размер: ${item.size} | Сост: ${item.condition}</div>
-                    <button class="add-btn" onclick="addToCart(${item.id})">В корзину</button>
+                    <div class="btns-row"><button class="add-btn" onclick="addToCart(${item.id})">В корзину</button>${editButtonHtml}</div>
                 `;
                 list.appendChild(el);
             });
             showPage('productsPage');
         }
 
-        function openCart() { renderCartPage(); showPage('cartPage'); }
+        function nextSlide(container) {
+            const track = container.querySelector('.slider-track');
+            const dots = container.querySelectorAll('.dot');
+            if(dots.length <= 1) return;
+            
+            let currentTransform = track.style.transform || 'translateX(0%)';
+            let currentPercent = (currentTransform.match(/translateX\(-?([\d.]+)%\)/) || [0,0])[1];
+            let currentIdx = Math.round(parseFloat(currentPercent) / (100 / dots.length));
+            let nextIdx = (currentIdx + 1) % dots.length;
 
-        function renderCartPage() {
-            const list = document.getElementById('cartItemsList');
-            const btn = document.querySelector('.checkout-btn-visible');
-            list.innerHTML = '';
-            if (cart.length === 0) { list.innerHTML = '<div style="text-align:center; padding:40px; color:#555">Корзина пуста</div>'; btn.style.display = 'none'; return; }
-            btn.style.display = 'block';
-            cart.forEach((item, index) => {
-                const el = document.createElement('div');
-                el.className = 'cart-item';
-                el.innerHTML = `<div><div style="font-weight:bold; margin-bottom:4px;">${item.title}</div><div style="font-size:12px; color:#888;">${item.size} | ${item.price.toLocaleString()} ₽</div></div><div style="color:#ff3b30; font-size:24px; padding:0 10px;" onclick="removeFromCart(${index})">×</div>`;
-                list.appendChild(el);
+            track.style.transform = `translateX(-${nextIdx * (100 / dots.length)}%)`;
+            dots.forEach(d => d.classList.remove('active'));
+            dots[nextIdx].classList.add('active');
+        }
+
+        // --- РЕДАКТИРОВАНИЕ ---
+        function openEditPage(id) {
+            const p = PRODUCTS_DB.find(x => x.id === id);
+            if(!p) return;
+            document.getElementById('editId').value = p.id;
+            document.getElementById('editTitle').value = p.title;
+            document.getElementById('editPrice').value = p.price;
+            document.getElementById('editSize').value = p.size;
+            document.getElementById('editCondition').value = p.condition;
+            document.getElementById('editImages').value = p.images.join('\n');
+            updatePreview(p.images);
+            showPage('editPage');
+        }
+
+        document.getElementById('editImages').addEventListener('input', (e) => updatePreview(e.target.value.split(/[\n,]+/).map(u=>u.trim()).filter(u=>u)));
+        function updatePreview(urls) {
+            const c = document.getElementById('editImagesPreview'); c.innerHTML = '';
+            urls.forEach(url => { const i=document.createElement('img'); i.src=url; i.className='img-preview-item'; c.appendChild(i); });
+        }
+
+        function saveProduct() {
+            const id = parseInt(document.getElementById('editId').value);
+            const imgArray = document.getElementById('editImages').value.split(/[\n,]+/).map(u => u.trim()).filter(u => u.length > 0);
+            
+            const updatedData = {
+                id: id,
+                title: document.getElementById('editTitle').value,
+                price: parseInt(document.getElementById('editPrice').value),
+                size: document.getElementById('editSize').value,
+                condition: document.getElementById('editCondition').value,
+                images: imgArray
+            };
+
+            fetch('/api/update_product', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(updatedData)
+            }).then(r => r.json()).then(data => {
+                if(data.status === 'ok') {
+                    tg.showPopup({message: 'Сохранено!'});
+                    fetchProducts(); // Обновить локальную базу
+                    goBack();
+                } else { tg.showPopup({message: 'Ошибка сохранения'}); }
             });
         }
 
+        // --- КОРЗИНА ---
+        function addToCart(id) { const p = PRODUCTS_DB.find(x => x.id === id); if(p) { cart.push(p); updateCartUI(); tg.HapticFeedback.notificationOccurred('success'); }}
+        function updateCartUI() {
+            document.getElementById('cartCount').innerText = cart.length;
+            if (cart.length > 0) { tg.MainButton.setText(`ЗАКАЗАТЬ • ${cart.reduce((a,b)=>a+b.price,0).toLocaleString()} ₽`); tg.MainButton.show(); tg.MainButton.onClick(submitOrder); } 
+            else { tg.MainButton.hide(); }
+        }
+        function openCart() { renderCartPage(); showPage('cartPage'); }
+        function renderCartPage() {
+            const list = document.getElementById('cartItemsList'); const btn = document.querySelector('.checkout-btn-visible'); list.innerHTML = '';
+            if (cart.length === 0) { list.innerHTML = '<div style="text-align:center; padding:40px; color:#555">Корзина пуста</div>'; btn.style.display = 'none'; return; }
+            btn.style.display = 'block';
+            cart.forEach((item, index) => {
+                list.innerHTML += `<div class="cart-item"><div><div style="font-weight:bold;">${item.title}</div><div style="font-size:12px;color:#888">${item.size} | ${item.price} ₽</div></div><div style="color:#ff3b30;font-size:24px;padding:0 10px;cursor:pointer" onclick="cart.splice(${index},1);updateCartUI();renderCartPage()">×</div></div>`;
+            });
+        }
+
+        // --- ЗАКАЗ ---
         function submitOrder() {
             const name = document.getElementById('inputName').value;
             const phone = document.getElementById('inputPhone').value;
-            if (!name || !phone) { tg.showPopup({title: 'Ошибка', message: 'Пожалуйста, укажите Имя и Телефон'}); return; }
-            if (cart.length === 0) { tg.showPopup({message: 'Корзина пуста'}); return; }
+            if (!name || !phone) { tg.showPopup({title: 'Ошибка', message: 'Заполните Имя и Телефон'}); return; }
+            
+            const userId = tg.initDataUnsafe?.user?.id;
 
-            const orderData = { type: 'ORDER', customer: { name, phone, nick: document.getElementById('inputNick').value, delivery: document.getElementById('inputDelivery').value }, items: cart, total: cart.reduce((sum, item) => sum + item.price, 0) };
-            tg.sendData(JSON.stringify(orderData));
+            const orderData = {
+                user_id: userId,
+                customer: { name, phone, nick: document.getElementById('inputNick').value, delivery: document.getElementById('inputDelivery').value },
+                items: cart,
+                total: cart.reduce((s, i) => s + i.price, 0)
+            };
+
+            fetch('/api/order', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(orderData) })
+            .then(r => { if(r.ok) tg.close(); else tg.showPopup({message: 'Ошибка'}); }).catch(e => console.error(e));
         }
     </script>
 </body>
