@@ -7,11 +7,10 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
         :root {
-            --bg-color: #0A0A0A; /* Черный фон */
-            --card-bg: #141414;  /* Чуть светлее для карточек */
-            --accent-color: #ff5722; /* Оранжевый */
+            --bg-color: #0A0A0A;   /* Черный фон приложения */
+            --accent-color: #ff5722; /* Оранжевый BAZIS */
+            --card-white: #F2F2F2;   /* Цвет карточек как на фото */
             --text-main: #ffffff;
-            --text-sec: #888888;
         }
 
         body {
@@ -24,7 +23,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* --- НАВИГАЦИЯ (Назад) --- */
+        /* --- НАВИГАЦИЯ --- */
         .nav-header {
             display: flex; align-items: center; margin-bottom: 15px; height: 40px;
         }
@@ -34,10 +33,10 @@
             font-weight: 500;
         }
 
-        /* --- БЛОК 1: ЛОГОТИП (БАЗИС) --- */
+        /* --- ЛОГОТИП BAZIS (ВЕРХНИЙ БЛОК) --- */
         .logo-card {
-            background: var(--card-bg);
-            border: 1px solid #333; /* Тонкая темная обводка */
+            background: #141414;
+            border: 1px solid #333;
             border-radius: 25px;
             padding: 20px;
             display: flex;
@@ -46,54 +45,34 @@
             margin-bottom: 15px;
         }
         .logo-big {
-            font-size: 48px;
-            font-weight: 800; /* Жирный шрифт */
-            color: var(--accent-color);
-            line-height: 0.9;
-            letter-spacing: 1px;
+            font-size: 48px; font-weight: 800; color: var(--accent-color); line-height: 0.9; letter-spacing: 1px;
         }
         .logo-desc {
-            font-size: 10px;
-            color: var(--text-sec);
-            text-align: right;
-            max-width: 130px;
-            line-height: 1.4;
+            font-size: 10px; color: #888; text-align: right; max-width: 130px; line-height: 1.4;
         }
 
-        /* --- БЛОК 2: БАННЕР ТЕЛЕГРАМ --- */
+        /* --- БАННЕР TELEGRAM --- */
         .tg-banner {
             background: linear-gradient(90deg, #ff5722 0%, #ff8a50 100%);
-            border-radius: 50px;
-            padding: 10px 10px 10px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            color: #fff;
-            margin-bottom: 25px;
-            font-size: 11px;
-            text-decoration: none;
-            font-weight: 500;
+            border-radius: 50px; padding: 10px 10px 10px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            color: #fff; margin-bottom: 25px; font-size: 11px; text-decoration: none; font-weight: 500;
         }
         .tg-btn {
-            background: #000;
-            color: #fff;
-            border-radius: 30px;
-            padding: 8px 16px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 11px;
-            font-weight: 700;
+            background: #000; color: #fff; border-radius: 30px; padding: 8px 16px;
+            display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700;
         }
 
-        /* --- БЛОК 3: БРЕНДЫ (ГЛАВНОЕ МЕНЮ) --- */
+        /* --- ГЛАВНЫЕ КАРТОЧКИ БРЕНДОВ (КАК НА ФОТО) --- */
         .brands-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 12px;
         }
+
         .brand-card-large {
             aspect-ratio: 1 / 1;
+            background-color: var(--card-white); /* Светлый фон */
             border-radius: 25px;
             position: relative;
             cursor: pointer;
@@ -102,42 +81,39 @@
             justify-content: center;
             transition: transform 0.1s;
             overflow: hidden;
-            border: 1px solid #222;
+            /* Убираем бордеры, так как на фото чисто белые карточки */
+            border: none; 
         }
         .brand-card-large:active { transform: scale(0.97); }
 
-        /* Stone Island (Оранжевый) */
-        .brand-card-large.si {
-            background-color: var(--accent-color);
-            border: none;
-        }
-        /* CP Company (Темно-серый) */
-        .brand-card-large.cp {
-            background-color: #1e1e1e;
-        }
-
+        /* Логотипы внутри карточек */
         .brand-logo-center {
-            width: 80%; height: 80%; object-fit: contain;
+            width: 70%; 
+            height: 70%; 
+            object-fit: contain;
+            /* Логотипы должны быть черными/оригинальными на белом фоне */
         }
 
-        /* Инверсия логотипа CP Company в белый цвет */
-        .brand-logo-center.invert {
-            filter: invert(1) brightness(2); 
+        /* Оранжевая кнопка со стрелкой (как на фото) */
+        .arrow-circle-brand {
+            position: absolute;
+            bottom: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-color); /* Оранжевый круг */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(255, 87, 34, 0.3);
+        }
+        .arrow-circle-brand svg {
+            stroke: #ffffff; /* Белая стрелка */
+            stroke-width: 2.5;
         }
 
-        /* Круглая стрелка */
-        .arrow-circle {
-            position: absolute; bottom: 15px; right: 15px;
-            width: 36px; height: 36px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .brand-card-large.si .arrow-circle { background: #000; color: var(--accent-color); }
-        .brand-card-large.si .arrow-circle svg { stroke: var(--accent-color); }
-
-        .brand-card-large.cp .arrow-circle { background: #fff; color: #000; }
-        .brand-card-large.cp .arrow-circle svg { stroke: #000; }
-
-        /* --- ПОСТЕРЫ (КАТЕГОРИИ) --- */
+        /* --- ВНУТРЕННИЕ РАЗДЕЛЫ (ТЕМНЫЙ СТИЛЬ) --- */
         .poster-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
         .poster-card {
             position: relative; height: 170px; border-radius: 20px;
@@ -160,38 +136,28 @@
         .poster-card.orange .mini-arrow svg { stroke: var(--accent-color); }
         .mini-arrow svg { stroke: #fff; }
 
-        /* --- ТОВАРЫ --- */
+        /* --- СПИСОК ТОВАРОВ --- */
         .product-card { background: #141414; border: 1px solid #222; border-radius: 15px; padding: 12px; margin-bottom: 15px; }
         .prod-img { width: 100%; height: 240px; object-fit: cover; border-radius: 10px; margin-bottom: 10px; background: #000; }
         .prod-title { font-weight: 700; font-size: 17px; margin-bottom: 5px; }
         .prod-price { color: var(--accent-color); font-weight: bold; font-size: 17px; margin-bottom: 10px; }
         .add-btn { background: #fff; color: #000; width: 100%; padding: 14px; border: none; border-radius: 10px; font-weight: 800; text-transform: uppercase; }
 
-        /* --- КОРЗИНА И ФОРМА --- */
+        /* --- КОРЗИНА --- */
         .cart-item { background: #141414; padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; }
-
         .form-input, .form-select { 
-            width: 100%; padding: 16px; margin-bottom: 12px; 
-            background: #141414; border: 1px solid #333; 
-            border-radius: 12px; color: #fff; font-size: 16px; 
-            box-sizing: border-box; -webkit-appearance: none;
+            width: 100%; padding: 16px; margin-bottom: 12px; background: #141414; border: 1px solid #333; 
+            border-radius: 12px; color: #fff; font-size: 16px; box-sizing: border-box; -webkit-appearance: none;
         }
-        .form-input::placeholder { color: #555; }
-        .form-input:focus { border-color: var(--accent-color); outline: none; }
-
         .checkout-btn { 
-            background: var(--accent-color); color: #fff; width: 100%; 
-            padding: 16px; border: none; border-radius: 12px; 
-            font-size: 18px; font-weight: 800; text-transform: uppercase; 
-            margin-top: 20px; box-shadow: 0 4px 15px rgba(255, 87, 34, 0.2); 
-            cursor: pointer;
+            background: var(--accent-color); color: #fff; width: 100%; padding: 16px; border: none; 
+            border-radius: 12px; font-size: 18px; font-weight: 800; text-transform: uppercase; 
+            margin-top: 20px; cursor: pointer;
         }
 
-        /* --- FAB --- */
         .fab-cart { position: fixed; bottom: 25px; right: 20px; background: var(--accent-color); color: white; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 20px rgba(255, 87, 34, 0.2); z-index: 200; font-size: 24px; }
         .cart-count { position: absolute; top: -5px; right: -5px; background: #fff; color: #000; font-size: 11px; font-weight: bold; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-        /* --- COMMON --- */
         .page { display: none; animation: fadeIn 0.3s ease; }
         .page.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -200,7 +166,7 @@
 </head>
 <body>
 
-    <!-- Навигация -->
+    <!-- НАВИГАЦИЯ -->
     <div class="nav-header" id="navHeader" style="display: none;">
         <button class="back-btn" onclick="goBack()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -208,7 +174,7 @@
         </button>
     </div>
 
-    <!-- 1. ГЛАВНАЯ (ВЫБОР БРЕНДА) -->
+    <!-- 1. ГЛАВНЫЙ ЭКРАН -->
     <div id="mainPage" class="page active">
 
         <div class="logo-card">
@@ -220,7 +186,7 @@
             </div>
         </div>
 
-        <a href="https://t.me/tvoi_kanal" target="_blank" class="tg-banner">
+        <a href="https://t.me/bazishub" target="_blank" class="tg-banner">
             <div>Подписывайся на наш канал<br>с новыми поступлениями</div>
             <div class="tg-btn">
                 Открыть
@@ -229,29 +195,35 @@
         </a>
 
         <div class="brands-grid">
-            <!-- Stone Island -->
-            <div class="brand-card-large si" onclick="openBrand('Stone Island')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Stone_Island_Compass_logo.svg/1024px-Stone_Island_Compass_logo.svg.png?20200908144012" class="brand-logo-center" style="filter: brightness(0) invert(1);">
-                <div class="arrow-circle">
+            <!-- Stone Island (Белая карточка) -->
+            <div class="brand-card-large" onclick="openBrand('Stone Island')">
+                <!-- Оригинальный логотип (не инвертированный, так как фон белый) -->
+                <img src="img/st.png" class="brand-logo-center">
+
+                <!-- Оранжевая кнопка со стрелкой -->
+                <div class="arrow-circle-brand">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </div>
             </div>
 
-            <!-- CP Company -->
-            <div class="brand-card-large cp" onclick="openBrand('CP Company')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/C.P._Company_logo.svg/2560px-C.P._Company_logo.svg.png" class="brand-logo-center invert">
-                <div class="arrow-circle">
+            <!-- CP Company (Белая карточка как на фото) -->
+            <div class="brand-card-large" onclick="openBrand('CP Company')">
+                <!-- Черный текстовый логотип -->
+                <img src="img/cp.png" class="brand-logo-center">
+
+                <!-- Оранжевая кнопка со стрелкой -->
+                <div class="arrow-circle-brand">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 2. КАТЕГОРИИ (ПОСТЕРЫ) -->
+    <!-- 2. РАЗДЕЛЫ БРЕНДА (ПОСТЕРЫ) -->
     <div id="categoriesPage" class="page">
         <h2 id="brandTitle">Brand Name</h2>
 
-        <!-- Stone Island Categories -->
+        <!-- Stone Island -->
         <div id="siCategories" class="poster-grid" style="display: none;">
             <div class="poster-card" onclick="openCategory('Stone Island', 'T-Shirts')">
                 <div class="card-content"><div class="card-title-big">T-Shirts</div><div class="card-subtitle">Graphic & Logo</div></div>
@@ -269,18 +241,13 @@
                 <div class="mini-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
             </div>
              <div class="poster-card" onclick="openCategory('Stone Island', 'Outerwear')">
-                <div class="card-content"><div class="card-title-big">Jackets</div><div class="card-subtitle">Nylon Metal / Crinkle</div></div>
+                <div class="card-content"><div class="card-title-big">Jackets</div><div class="card-subtitle">Nylon Metal</div></div>
                 <img src="https://www.triads.co.uk/images/products/zoom/1660305680-45336800.jpg" class="card-bg-img">
-                <div class="mini-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-            </div>
-             <div class="poster-card" onclick="openCategory('Stone Island', 'Accessories')">
-                <div class="card-content"><div class="card-title-big">Access</div><div class="card-subtitle">Caps & Belts</div></div>
-                <img src="https://img01.ztat.net/article/spp-media-p1/d4c5322c15e34d3881b78468e2447c60/857ec713f43644938177d606073f4a4f.jpg?imwidth=1800" class="card-bg-img">
                 <div class="mini-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
             </div>
         </div>
 
-        <!-- CP Company Categories -->
+        <!-- CP Company -->
         <div id="cpCategories" class="poster-grid" style="display: none;">
              <div class="poster-card blue" style="grid-column: span 2;" onclick="openCategory('CP Company', 'Outerwear')">
                 <div class="card-content"><div class="card-title-big">Metropolis</div><div class="card-subtitle">Urban Protection</div></div>
@@ -306,7 +273,6 @@
         <h2>Оформление</h2>
         <div id="cartItemsList"></div>
         <div style="border-top: 1px solid #222; margin: 20px 0;"></div>
-
         <input type="text" class="form-input" id="inputName" placeholder="Имя Фамилия">
         <input type="tel" class="form-input" id="inputPhone" placeholder="Телефон">
         <input type="text" class="form-input" id="inputNick" placeholder="Telegram (@username)">
@@ -315,7 +281,6 @@
              <option value="yandex">Яндекс Доставка</option>
              <option value="pickup">Самовывоз</option>
         </select>
-
         <button class="checkout-btn" onclick="submitOrder()">Отправить заказ</button>
     </div>
 
@@ -325,137 +290,76 @@
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand(); tg.ready();
-
-        // Устанавливаем цвета для шапки и фона
-        tg.setHeaderColor('#0A0A0A'); 
-        tg.setBackgroundColor('#0A0A0A');
-
-        tg.MainButton.color = "#ff5722"; 
-        tg.MainButton.textColor = "#ffffff";
+        tg.setHeaderColor('#0A0A0A'); tg.setBackgroundColor('#0A0A0A');
+        tg.MainButton.color = "#ff5722"; tg.MainButton.textColor = "#ffffff";
         tg.MainButton.onClick(submitOrder);
 
         let pageHistory = ['mainPage'];
-
         const PRODUCTS_DB = [
             { id: 1, brand: 'Stone Island', category: 'T-Shirts', title: 'Logo Tee', price: 18500, size: 'L', color: 'Black', condition: 'New', img: 'https://image.goxip.com/u4g1y8y_s2r4s3r8x4t2r5u2u2/stone-island-white-scraping-t-shirt.jpg' },
             { id: 2, brand: 'Stone Island', category: 'Hoodies', title: 'Shadow Project', price: 45000, size: 'XL', color: 'Olive', condition: '9/10', img: 'https://cdn-images.farfetch-contents.com/17/60/89/24/17608924_36852642_1000.jpg' },
             { id: 3, brand: 'Stone Island', category: 'Vintage', title: 'Raso Gommato', price: 85000, size: 'M', color: 'Camo', condition: 'Vintage', img: 'https://media.endclothing.com/media/f_auto,q_auto:eco,w_400/prodmedia/media/catalog/product/2/0/20-01-2022_SI_MEMBRANATC_LOW.jpg' },
             { id: 4, brand: 'CP Company', category: 'Outerwear', title: 'Metropolis Jkt', price: 92000, size: '50', color: 'Grey', condition: 'New', img: 'https://cdn-images.farfetch-contents.com/19/52/47/48/19524748_43431995_1000.jpg' },
-            { id: 5, brand: 'Stone Island', category: 'Outerwear', title: 'Nylon Metal', price: 65000, size: 'L', color: 'Blue', condition: 'New', img: 'https://www.triads.co.uk/images/products/zoom/1660305680-45336800.jpg' },
-            { id: 6, brand: 'Stone Island', category: 'Accessories', title: 'Logo Cap', price: 14500, size: 'OS', color: 'Black', condition: 'New', img: 'https://img01.ztat.net/article/spp-media-p1/d4c5322c15e34d3881b78468e2447c60/857ec713f43644938177d606073f4a4f.jpg?imwidth=1800' }
+            { id: 5, brand: 'Stone Island', category: 'Outerwear', title: 'Nylon Metal', price: 65000, size: 'L', color: 'Blue', condition: 'New', img: 'https://www.triads.co.uk/images/products/zoom/1660305680-45336800.jpg' }
         ];
-
         let cart = [];
 
         function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-
             const nav = document.getElementById('navHeader');
-            if(pageId === 'mainPage') {
-                nav.style.display = 'none';
-                pageHistory = ['mainPage'];
-            } else {
-                nav.style.display = 'flex';
-                if(pageHistory[pageHistory.length - 1] !== pageId) pageHistory.push(pageId);
-            }
-
-            if(pageId !== 'cartPage') tg.MainButton.hide();
-            else updateCartUI();
-
+            if(pageId === 'mainPage') { nav.style.display = 'none'; pageHistory = ['mainPage']; } 
+            else { nav.style.display = 'flex'; if(pageHistory[pageHistory.length-1]!==pageId) pageHistory.push(pageId); }
+            if(pageId !== 'cartPage') tg.MainButton.hide(); else updateCartUI();
             window.scrollTo(0,0);
         }
-
         function goBack() {
             if(pageHistory.length > 1) {
-                pageHistory.pop();
-                const prev = pageHistory[pageHistory.length - 1];
+                pageHistory.pop(); const prev = pageHistory[pageHistory.length-1];
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
                 document.getElementById(prev).classList.add('active');
                 if(prev === 'mainPage') document.getElementById('navHeader').style.display = 'none';
                 window.scrollTo(0,0);
             }
         }
-
         function openBrand(brand) {
             document.getElementById('brandTitle').innerText = brand;
-            if(brand === 'Stone Island') {
-                document.getElementById('siCategories').style.display = 'grid';
-                document.getElementById('cpCategories').style.display = 'none';
-            } else {
-                document.getElementById('siCategories').style.display = 'none';
-                document.getElementById('cpCategories').style.display = 'grid';
-            }
+            document.getElementById('siCategories').style.display = (brand==='Stone Island')?'grid':'none';
+            document.getElementById('cpCategories').style.display = (brand==='CP Company')?'grid':'none';
             switchPage('categoriesPage');
         }
-
         function openCategory(brand, cat) {
-            const list = document.getElementById('productsList');
-            document.getElementById('categoryTitle').innerText = cat;
-            list.innerHTML = '';
-            const items = PRODUCTS_DB.filter(p => p.brand === brand && p.category === cat);
-            if(items.length === 0) list.innerHTML = '<div style="padding:20px; text-align:center; color:#555">Пусто</div>';
+            const list = document.getElementById('productsList'); document.getElementById('categoryTitle').innerText = cat;
+            list.innerHTML = ''; const items = PRODUCTS_DB.filter(p => p.brand === brand && p.category === cat);
+            if(items.length === 0) list.innerHTML = '<div style="padding:20px;text-align:center;color:#555">Пусто</div>';
             items.forEach(item => {
-                const el = document.createElement('div');
-                el.className = 'product-card';
-                el.innerHTML = `
-                    <img src="${item.img}" class="prod-img">
-                    <div class="prod-title">${item.title}</div>
-                    <div class="prod-price">${item.price.toLocaleString()} ₽</div>
-                    <button class="add-btn" onclick="addToCart(${item.id})">В КОРЗИНУ</button>
-                `;
+                const el = document.createElement('div'); el.className = 'product-card';
+                el.innerHTML = `<img src="${item.img}" class="prod-img"><div class="prod-title">${item.title}</div><div class="prod-price">${item.price.toLocaleString()} ₽</div><button class="add-btn" onclick="addToCart(${item.id})">В КОРЗИНУ</button>`;
                 list.appendChild(el);
             });
             switchPage('productsPage');
         }
-
-        function addToCart(id) {
-            const p = PRODUCTS_DB.find(x => x.id === id);
-            if(p) { cart.push(p); updateCartUI(); tg.HapticFeedback.notificationOccurred('success'); }
-        }
-
-        function removeFromCart(idx) {
-            cart.splice(idx, 1); updateCartUI(); renderCart(); tg.HapticFeedback.selectionChanged();
-        }
-
+        function addToCart(id) { const p = PRODUCTS_DB.find(x => x.id === id); if(p) { cart.push(p); updateCartUI(); tg.HapticFeedback.notificationOccurred('success'); } }
+        function removeFromCart(idx) { cart.splice(idx, 1); updateCartUI(); renderCart(); tg.HapticFeedback.selectionChanged(); }
         function updateCartUI() {
             document.getElementById('cartCount').innerText = cart.length;
-            if(cart.length > 0) {
-                const total = cart.reduce((a,b)=>a+b.price,0);
-                tg.MainButton.setText(`ЗАКАЗАТЬ • ${total.toLocaleString()} ₽`);
-                if(document.getElementById('cartPage').classList.contains('active')) tg.MainButton.show();
-            } else { tg.MainButton.hide(); }
+            if(cart.length > 0) { const total = cart.reduce((a,b)=>a+b.price,0); tg.MainButton.setText(`ЗАКАЗАТЬ • ${total.toLocaleString()} ₽`); if(document.getElementById('cartPage').classList.contains('active')) tg.MainButton.show(); } else { tg.MainButton.hide(); }
         }
-
         function openCart() { renderCart(); switchPage('cartPage'); }
-
         function renderCart() {
-            const list = document.getElementById('cartItemsList');
-            list.innerHTML = '';
-            if(cart.length === 0) { 
-                list.innerHTML = '<div style="padding:20px; text-align:center; color:#555">Корзина пуста</div>'; 
-                document.querySelector('.checkout-btn').style.display = 'none';
-                return; 
-            }
+            const list = document.getElementById('cartItemsList'); list.innerHTML = '';
+            if(cart.length === 0) { list.innerHTML = '<div style="padding:20px;text-align:center;color:#555">Корзина пуста</div>'; document.querySelector('.checkout-btn').style.display = 'none'; return; }
             document.querySelector('.checkout-btn').style.display = 'block';
             cart.forEach((item, i) => {
-                const el = document.createElement('div');
-                el.className = 'cart-item';
-                el.innerHTML = `<div><b>${item.title}</b><br><small style="color:#888">${item.size} | ${item.price}</small></div><div style="color:#ff3b30; font-size:20px;" onclick="removeFromCart(${i})">×</div>`;
+                const el = document.createElement('div'); el.className = 'cart-item';
+                el.innerHTML = `<div><b>${item.title}</b><br><small style="color:#888">${item.size} | ${item.price}</small></div><div style="color:#ff3b30;font-size:20px;" onclick="removeFromCart(${i})">×</div>`;
                 list.appendChild(el);
             });
         }
-
         function submitOrder() {
-            const name = document.getElementById('inputName').value;
-            const phone = document.getElementById('inputPhone').value;
+            const name = document.getElementById('inputName').value; const phone = document.getElementById('inputPhone').value;
             if(!name || !phone) { tg.showPopup({message:'Укажите имя и телефон'}); return; }
-            const data = {
-                type: 'ORDER',
-                customer: { name, phone, nick: document.getElementById('inputNick').value, delivery: document.getElementById('inputDelivery').value },
-                items: cart,
-                total: cart.reduce((a,b)=>a+b.price,0)
-            };
+            const data = { type: 'ORDER', customer: { name, phone, nick: document.getElementById('inputNick').value, delivery: document.getElementById('inputDelivery').value }, items: cart, total: cart.reduce((a,b)=>a+b.price,0) };
             tg.sendData(JSON.stringify(data));
         }
     </script>
