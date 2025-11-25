@@ -6,173 +6,191 @@
     <title>BAZIS Store</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        /* СБРОС СТИЛЕЙ И БАЗА */
+        :root {
+            /* Цвета по умолчанию (подстроятся под тему) */
+            --bg-color: var(--tg-theme-bg-color, #fff);
+            --text-color: var(--tg-theme-text-color, #000);
+            --secondary-bg: var(--tg-theme-secondary-bg-color, #f5f5f5);
+            --hint-color: var(--tg-theme-hint-color, #888);
+            --accent-color: var(--tg-theme-button-color, #3390ec);
+            --card-bg: var(--tg-theme-secondary-bg-color, #ffffff);
+        }
+
         body {
-            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--tg-theme-bg-color, #1a1a1a); /* Темный фон по умолчанию */
-            color: var(--tg-theme-text-color, #ffffff);
-        }
-
-        .header {
+            margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- ЛОГОТИП МАГАЗИНА --- */
+        .store-header {
             text-align: center;
-            background-color: var(--tg-theme-secondary-bg-color, #2c2c2c);
+            margin-bottom: 30px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .store-logo {
+            width: 120px; 
+            height: 120px;
+            object-fit: contain;
+            border-radius: 50%; /* Круглый логотип */
+            margin-bottom: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .store-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* --- КАРТОЧКА БРЕНДА --- */
+        .brand-section {
+            background-color: var(--secondary-bg);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            animation: slideUp 0.5s ease;
+        }
+
+        .brand-header {
+            display: flex;
+            align-items: center;
             margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-        .header h1 {
-            margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--hint-color);
+            opacity: 0.8;
         }
 
-        /* СЕТКА ТОВАРОВ */
-        .container {
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .brand-name {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        /* --- СЕТКА КАТЕГОРИЙ --- */
+        .categories-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr; /* Две колонки */
-            gap: 12px;
-            padding: 0 12px 80px 12px; /* Отступ снизу, чтобы кнопка не перекрывала товары */
+            grid-template-columns: 1fr 1fr; /* 2 колонки */
+            gap: 10px;
         }
 
-        .card {
-            background-color: var(--tg-theme-secondary-bg-color, #2c2c2c);
-            border-radius: 12px;
-            overflow: hidden;
-            display: flex; flex-direction: column;
-            position: relative;
-        }
-
-        .image-placeholder {
-            width: 100%;
-            height: 160px;
-            background-color: #444;
-            display: flex; align-items: center; justify-content: center;
-            color: #888; font-size: 12px;
-        }
-
-        /* Если будете вставлять реальные фото, используйте тег img вместо div выше */
-        .card img { width: 100%; height: 160px; object-fit: cover; }
-
-        .card-body { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-        .card-title { font-size: 14px; margin-bottom: 5px; font-weight: 600; }
-        .card-price { font-size: 16px; font-weight: bold; margin-top: auto; color: var(--tg-theme-button-color, #3390ec); }
-
-        /* КНОПКА ДОБАВИТЬ */
-        .add-btn {
-            margin-top: 10px;
-            width: 100%;
-            padding: 8px;
+        .category-btn {
+            background-color: var(--bg-color);
+            color: var(--text-color);
             border: none;
-            border-radius: 6px;
-            background-color: var(--tg-theme-button-color, #3390ec);
-            color: var(--tg-theme-button-text-color, #fff);
-            font-weight: 600;
+            padding: 15px 10px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: transform 0.1s, background-color 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            text-align: center;
         }
-        .add-btn:active { opacity: 0.8; }
 
-        /* СЧЕТЧИК НА ТОВАРЕ */
-        .counter {
-            position: absolute; top: 8px; right: 8px;
-            background: #3390ec; color: white;
-            border-radius: 50%; width: 24px; height: 24px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: bold;
-            display: none; /* Скрыт по умолчанию */
+        .category-btn:active {
+            transform: scale(0.96);
+            background-color: var(--secondary-bg);
         }
+
+        /* Специальный стиль для кнопки Vintage (на всю ширину) */
+        .full-width {
+            grid-column: span 2;
+            background: linear-gradient(45deg, var(--secondary-bg), var(--bg-color));
+            border: 1px dashed var(--hint-color);
+            font-weight: bold;
+        }
+
+        /* --- АНИМАЦИИ --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>BAZIS</h1>
+    <!-- 1. ШАПКА МАГАЗИНА -->
+    <div class="store-header">
+        <!-- ЗАМЕНИ ССЫЛКУ НИЖЕ НА СВОЙ ЛОГОТИП BAZIS -->
+        <img src="img/logo_bazis.jpeg" alt="BAZIS Logo" class="store-logo">
+        <div class="store-title">BAZIS</div>
     </div>
 
-    <div class="container" id="items-list">
-        <!-- Товары генерируются тут -->
+    <!-- 2. БЛОК STONE ISLAND -->
+    <div class="brand-section">
+        <div class="brand-header">
+            <!-- ЗАМЕНИ ССЫЛКУ НА ЛОГО SI -->
+            <img src="img/stone island.jpg" class="brand-logo" alt="SI">
+            <span class="brand-name">Stone Island</span>
+        </div>
+
+        <div class="categories-grid">
+            <button class="category-btn" onclick="send('Stone Island', 'T-Shirts')">Футболки</button>
+            <button class="category-btn" onclick="send('Stone Island', 'Hoodies')">Худи</button>
+            <button class="category-btn" onclick="send('Stone Island', 'Outerwear')">Верхняя одежда</button>
+            <button class="category-btn" onclick="send('Stone Island', 'Accessories')">Аксессуары</button>
+            <button class="category-btn full-width" onclick="send('Stone Island', 'Vintage')">💎 Винтажные вещи</button>
+        </div>
+    </div>
+
+    <!-- 3. БЛОК C.P. COMPANY -->
+    <div class="brand-section">
+        <div class="brand-header">
+            <!-- ЗАМЕНИ ССЫЛКУ НА ЛОГО CP -->
+            <img src="img/c. p. company.jpg" class="brand-logo" alt="CP">
+            <span class="brand-name">C.P. Company</span>
+        </div>
+
+        <div class="categories-grid">
+            <button class="category-btn" onclick="send('CP Company', 'T-Shirts')">Футболки</button>
+            <button class="category-btn" onclick="send('CP Company', 'Hoodies')">Худи</button>
+            <button class="category-btn" onclick="send('CP Company', 'Outerwear')">Верхняя одежда</button>
+            <button class="category-btn" onclick="send('CP Company', 'Accessories')">Аксессуары</button>
+            <button class="category-btn full-width" onclick="send('CP Company', 'Vintage')">💎 Винтажные вещи</button>
+        </div>
     </div>
 
     <script>
         const tg = window.Telegram.WebApp;
         tg.expand(); // На весь экран
+        tg.ready();
 
-        // БАЗА ТОВАРОВ (Имитация БД)
-        const products = [
-            {id: 1, name: 'Футболка Oversize', price: 2500, img: 'https://via.placeholder.com/300x300/333/fff?text=T-Shirt'},
-            {id: 2, name: 'Худи Basic Black', price: 4900, img: 'https://via.placeholder.com/300x300/333/fff?text=Hoodie'},
-            {id: 3, name: 'Брюки Cargo', price: 5500, img: 'https://via.placeholder.com/300x300/333/fff?text=Pants'},
-            {id: 4, name: 'Кепка BAZIS', price: 1500, img: 'https://via.placeholder.com/300x300/333/fff?text=Cap'},
-            {id: 5, name: 'Носки Pack (3 шт)', price: 900, img: 'https://via.placeholder.com/300x300/333/fff?text=Socks'},
-            {id: 6, name: 'Бомбер Urban', price: 8900, img: 'https://via.placeholder.com/300x300/333/fff?text=Bomber'},
-        ];
-
-        const cart = {}; // Хранит {id: количество}
-
-        // ОТРИСОВКА ТОВАРОВ
-        const list = document.getElementById('items-list');
-        products.forEach(item => {
-            const el = document.createElement('div');
-            el.className = 'card';
-            el.innerHTML = `
-                <span class="counter" id="cnt-${item.id}">0</span>
-                <img src="${item.img}" alt="${item.name}">
-                <div class="card-body">
-                    <div class="card-title">${item.name}</div>
-                    <div class="card-price">${item.price} ₽</div>
-                    <button class="add-btn" onclick="addItem(${item.id})">В корзину</button>
-                </div>
-            `;
-            list.appendChild(el);
-        });
-
-        // ЛОГИКА КОРЗИНЫ
-        function addItem(id) {
-            if (!cart[id]) cart[id] = 0;
-            cart[id]++;
-
-            // Обновляем счетчик на карточке
-            const counter = document.getElementById(`cnt-${id}`);
-            counter.style.display = 'flex';
-            counter.innerText = cart[id];
-
-            // Вибрация при нажатии (приятный тактильный отклик)
+        // Функция отправки данных боту
+        function send(brand, category) {
+            // Вибрация для тактильного отклика
             tg.HapticFeedback.impactOccurred('light');
 
-            updateMainButton();
+            const data = {
+                brand: brand,
+                category: category
+            };
+
+            // Отправляем JSON строку обратно в Python
+            tg.sendData(JSON.stringify(data));
         }
-
-        function updateMainButton() {
-            let totalSum = 0;
-            let itemsCount = 0;
-
-            for (let id in cart) {
-                const product = products.find(p => p.id == id);
-                totalSum += product.price * cart[id];
-                itemsCount += cart[id];
-            }
-
-            if (itemsCount > 0) {
-                tg.MainButton.setText(`ОФОРМИТЬ ЗАКАЗ: ${totalSum} ₽`);
-                tg.MainButton.show();
-            } else {
-                tg.MainButton.hide();
-            }
-        }
-
-        // ОТПРАВКА ДАННЫХ БОТУ
-        tg.MainButton.onClick(function() {
-            // Собираем красивый список для отправки
-            const dataToSend = [];
-            for (let id in cart) {
-                const product = products.find(p => p.id == id);
-                dataToSend.push({
-                    name: product.name,
-                    count: cart[id],
-                    total: product.price * cart[id]
-                });
-            }
-            tg.sendData(JSON.stringify(dataToSend));
-        });
     </script>
 </body>
 </html>
